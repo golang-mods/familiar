@@ -12,8 +12,8 @@ func prepareCommand(command *exec.Cmd) {
 }
 
 func killChildren(command *exec.Cmd, signal syscall.Signal) error {
-	err := syscall.Kill(-command.Process.Pid, sig)
-	if err == nil && sig != syscall.SIGKILL && sig != syscall.SIGCONT {
+	err := syscall.Kill(-command.Process.Pid, signal)
+	if err == nil && signal != syscall.SIGKILL && signal != syscall.SIGCONT {
 		err = syscall.Kill(-command.Process.Pid, syscall.SIGCONT)
 	}
 	return err
