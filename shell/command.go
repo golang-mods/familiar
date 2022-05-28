@@ -39,6 +39,9 @@ func Exec(stdout io.Writer, name string, arguments ...string) func(...Option) (b
 			stdout = os.Stdout
 		}
 		command, name, arguments := buildCommand(stdout, name, arguments, opts)
+
+		verboseCommand(name, arguments...)
+
 		return executeError(command.Run(), name, arguments)
 	}
 }

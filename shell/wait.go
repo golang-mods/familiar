@@ -72,6 +72,9 @@ func start(stdout io.Writer, options *commandOptions, name string, arguments ...
 	const waitTime = 5 * time.Second
 
 	command, name, arguments := buildCommand(stdout, name, arguments, options)
+
+	verboseCommand(name, arguments...)
+
 	ok, err := executeError(command.Start(), name, arguments)
 	if err != nil {
 		return nil, ok, err
