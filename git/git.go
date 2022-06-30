@@ -13,3 +13,7 @@ func RevisionShort(current string) (string, error) {
 func Tag(current string) (string, error) {
 	return shell.Output("git", "-C", current, "tag", "--points-at", "HEAD")(shell.StderrSilent())
 }
+
+func Clean(current string) error {
+	return shell.Run("git", "-C", current, "clean", "-fdX")()
+}

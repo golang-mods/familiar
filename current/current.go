@@ -20,3 +20,11 @@ func Function() string {
 	function := runtime.FuncForPC(pc)
 	return function.Name()
 }
+
+func ExeExt() string {
+	if runtime.GOOS == "windows" {
+		return ".exe"
+	}
+
+	return ""
+}
