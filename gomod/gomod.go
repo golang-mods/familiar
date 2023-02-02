@@ -1,21 +1,25 @@
 package gomod
 
 import (
-	"os"
 	"strings"
 
-	"github.com/golang-mods/familiar/shell"
 	"github.com/samber/lo"
 	"golang.org/x/mod/modfile"
 )
 
-func ModulePath() (string, error) {
-	path, err := shell.Output("go", "env", "GOMOD")(shell.StderrSilent())
+var internalLoader loader
+
+func File() (*modfile.File, error) {
+	path, data, err := internalLoader.load()
 	if err != nil {
-		return "", err
+		return nil, err
 	}
 
-	data, err := os.ReadFile(path)
+	return modfile.Parse(path, data, nil)
+}
+
+func ModulePath() (string, error) {
+	_, data, err := internalLoader.load()
 	if err != nil {
 		return "", err
 	}
