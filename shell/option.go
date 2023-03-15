@@ -9,12 +9,14 @@ type commandOptions struct {
 	environment map[string]string
 	directory   string
 	verbose     bool
+	stdin       io.Reader
 	stderr      io.Writer
 	arguments   []string
 }
 
 func buildOptions(options []Option) *commandOptions {
 	commandOptions := &commandOptions{
+		stdin:  os.Stdin,
 		stderr: os.Stderr,
 	}
 	for _, option := range options {
@@ -40,6 +42,12 @@ func Dir(directory string) Option {
 func Verbose() Option {
 	return func(options *commandOptions) {
 		options.verbose = true
+	}
+}
+
+func Stdin(stdin io.Reader) Option {
+	return func(options *commandOptions) {
+		options.stdin = stdin
 	}
 }
 

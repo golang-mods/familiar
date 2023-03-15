@@ -56,7 +56,7 @@ func buildCommand(stdout io.Writer, name string, arguments []string, options *co
 	command := exec.Command(name, args...)
 	command.Env = getEnvironment(options.environment)
 	command.Dir = options.directory
-	command.Stdin = os.Stdin
+	command.Stdin = options.stdin
 	command.Stdout = stdout
 	command.Stderr = options.stderr
 
