@@ -3,6 +3,8 @@ package shell
 import (
 	"io"
 	"os"
+	"path/filepath"
+	"runtime"
 )
 
 type commandOptions struct {
@@ -34,6 +36,18 @@ func Env(environment map[string]string) Option {
 }
 
 func Dir(directory string) Option {
+	return func(options *commandOptions) {
+		options.directory = directory
+	}
+}
+
+func CurrentDir() Option {
+	_, name, _, ok := runtime.Caller(1)
+	var directory string
+	if ok {
+		directory = filepath.Dir(name)
+	}
+
 	return func(options *commandOptions) {
 		options.directory = directory
 	}
