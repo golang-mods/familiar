@@ -30,11 +30,11 @@ func (ldflags *LDFlags) Flags() (string, error) {
 	flags := make([]string, 0, size)
 
 	for _, definition := range ldflags.Definitions {
-		flags = append(flags, fmt.Sprintf("-X %s=%s", definition.Name, definition.Value))
+		flags = append(flags, fmt.Sprintf("-X \"%s=%s\"", definition.Name, definition.Value))
 	}
 
 	for _, definition := range ldflags.MainDefinitions {
-		flags = append(flags, fmt.Sprintf("-X main.%s=%s", definition.Name, definition.Value))
+		flags = append(flags, fmt.Sprintf("-X \"main.%s=%s\"", definition.Name, definition.Value))
 	}
 
 	if len(ldflags.ModuleDefinitions) > 0 {
@@ -51,7 +51,7 @@ func (ldflags *LDFlags) Flags() (string, error) {
 				name = "." + name
 			}
 
-			flags = append(flags, fmt.Sprintf("-X %s%s=%s", module, name, definition.Value))
+			flags = append(flags, fmt.Sprintf("-X \"%s%s=%s\"", module, name, definition.Value))
 		}
 	}
 
